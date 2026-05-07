@@ -1,0 +1,39 @@
+name: Streamlit CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check Python Syntax
+        run: |
+          python -m py_compile agent_v2.py
+
+      - name: Run Basic Import Test
+        run: |
+          python -c "import pandas, streamlit, matplotlib"
+
+      - name: Success Message
+        run: echo "CI Passed Successfully ✅"
