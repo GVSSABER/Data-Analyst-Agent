@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ai-data-analyst
+    runtime: python
+    plan: free
+
+    buildCommand: pip install -r requirements.txt
+
+    startCommand: streamlit run agent_v2.py --server.port $PORT --server.address 0.0.0.0
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.11
